@@ -64,40 +64,15 @@ def delete_item_from_todo(item_id: int):
         }
     
 
-# Create a new todo item
-# @app.post("/todos/", response_model=Todo)
-# def add_todo(todo: Todo):
-#     todos.append(todo)
-#     return todo
 
-# Get all todo items
-# @app.get("/todos/", response_model=List[Todo])
-# def get_todos():
-#     return todos
-
-# # Update an existing todo item by id
-# @app.put("/todos/{todo_id}", response_model=Todo)
-# def update_todo(todo_id: int, todo: Todo):
-#     for idx, t in enumerate(todos):
-#         if t.id == todo_id:
-#             todos[idx] = todo
-#             return todo
-#     return {"error": "Todo not found"}
-
-# Delete a todo item by id
-# @app.delete("/todos/{todo_id}")
-# def delete_todo(todo_id: int):
-#     global todos
-#     todos = [t for t in todos if t.id != todo_id]
-#     return {"message": "Todo deleted"}
 
 # To run this app:
 
 
+# Tasks
+# create an update endpoint to update a todo item
+# create a get by id endpoint to get a specific todo item
 
-
-
-# python -m venv classenv
 # 1. pip install fastapi uvicorn pydantic
-# 2. uvicorn app:app --reload
+# 2. uvicorn main:app --reload
 # 3. Open http://127.0.0.1:8000/docs for interactive API documentation
