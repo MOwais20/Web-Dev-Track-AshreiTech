@@ -1,4 +1,5 @@
 from pydantic import BaseModel, Field
+
 """
 This module defines Pydantic models for representing and validating book data.
 
@@ -8,7 +9,14 @@ Classes:
     BookUpdate: Model for updating book details, allowing optional title, author, and price.
 
 We use Pydantic models to ensure data validation and type enforcement, making it easier to handle and serialize/deserialize data in APIs and applications.
+
 """
+
+# Why do we need serialize/deserialize and what is it?
+# Serialization is the process of converting a Python object (like a Book instance) into a format that can be easily stored or transmitted, such as JSON.
+# Deserialization is the reverse process: converting data (like JSON from an API request) back into a Python object.
+# This is essential for APIs and web applications, where data needs to be exchanged between different systems in a standard format.
+
 
 
 
