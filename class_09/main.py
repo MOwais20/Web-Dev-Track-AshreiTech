@@ -15,10 +15,21 @@ class Todo(BaseModel): # Object representing a To-Do item
     task: str  # Description of the task
     done: bool = False  # Status of the task (default: not done)
 
-
 # In-memory list to store todos
 # In a real app, you would use a database
-todos: List[Todo] = []
+todos: List[Todo] = [
+    {
+    "id": 1,
+    "task": "Task 1",
+    "done": False
+    },
+     {
+    "id": 2,
+    "task": "Task 2",
+    "done": False
+    }
+    
+]
 
 @app.post("/todo/add-item")
 def add_item_in_todo(item: Todo):
@@ -62,6 +73,32 @@ def delete_item_from_todo(item_id: int):
             "message": "No items found in the To-Do list",
             "success": False
         }
+        
+@app.put("/todo/update-item")
+def update_item_in_todo(item_id: int):
+    print("Id: ", item_id, type(item_id))
+    for index, todo in enumerate(todos):
+        print("Index: ", index, "\n")
+        print("Todo Item: ", todos[index], "\n")
+
+        # try:
+        if item_id == todo["id"]:
+            todos[index]["done"] = True 
+            return {
+                "message": "Task marked to done.",
+                "success": True
+            }
+            # else:
+            #     return {
+            #     "message": "Task not marked to done.",
+            #     "success": False
+            # }
+        # except Exception as e:
+        #     print("Error", e)
+            
+           
+           
+          
     
 
 

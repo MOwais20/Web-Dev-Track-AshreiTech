@@ -14,4 +14,10 @@ app.include_router(router)
 # Include authentication-related routes
 app.include_router(auth_router)
 
+@app.get("/")
+def show_msg():
+    return {
+        "messgae": "Heeloo, Welcome to our server"
+    }
+
 # Run with: uvicorn main:app --reload
