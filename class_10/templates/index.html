@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+<!-- This template extends the base.html template -->
+<!-- All the common elements like header, footer are inherited from base.html -->
+
+{% block title %}Book Library App{% endblock %}
+
+{% block head %}
+<!-- Additional head content specific to this page can go here -->
+{% endblock %}
+    
+    <main class="container">
+        <!-- The main element contains the central content of the document -->
+        
+        <!-- Jinja block for main content that can be overridden by child templates -->
+        {% block content %}
+        <section class="book-form">
+            <!-- A section element defines a section in a document -->
+            <h2>Add New Book</h2>
+            <!-- h2 defines a second-level heading -->
+            
+            <form id="add-book-form">
+                <!-- The form element is used to collect user input -->
+                <div class="form-group">
+                    <!-- Class names help target elements with CSS -->
+                    <label for="title">Title:</label>
+                    <!-- The label element provides a text label for the input field -->
+                    <input type="text" id="title" name="title" required>
+                    <!-- The input element is used to accept data from the user -->
+                    <!-- required attribute makes the field mandatory -->
+                </div>
+                
+                <div class="form-group">
+                    <label for="author">Author:</label>
+                    <input type="text" id="author" name="author" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="price">Price:</label>
+                    <input type="number" id="price" name="price" step="0.01" min="0" required>
+                    <!-- step attribute defines the interval between legal numbers -->
+                    <!-- min attribute defines the minimum allowed value -->
+                </div>
+                
+                <button type="submit" class="btn primary">Add Book</button>
+                <!-- The button element defines a clickable button -->
+                <!-- type="submit" means this button will submit the form -->
+            </form>
+        </section>
+        
+        <section class="book-list">
+            <h2>Book Collection</h2>
+            
+            <div class="filters">
+                <!-- Area for future filter options -->
+                <input type="text" id="search" placeholder="Search books...">
+            </div>
+            
+            <div class="books-container">
+                <!-- Using Jinja to conditionally display books or loading message -->
+                {% if books %}
+                    {% for book in books %}
+                    <div class="book-card" data-id="{{ book.id }}">
+                        <h3 class="book-title">{{ book.title }}</h3>
+                        <p class="book-author">by {{ book.author }}</p>
+                        <p class="book-price">${{ "%.2f"|format(book.price) }}</p>
+                        <div class="book-actions">
+                            <button class="btn edit" onclick="openEditModal({{ book|tojson }})">Edit</button>
+                            <button class="btn delete" onclick="handleDeleteBook({{ book.id }})">Delete</button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p id="loading-message">Loading books...</p>
+                {% endif %}
+                
+                <!-- Example of what a book card will look like -->
+                <!-- This is for demonstration and will be created dynamically by JS -->
+                <div class="book-card template">
+                    <!-- template class means this is just a model, not for display -->
+                    <h3 class="book-title">Book Title</h3>
+                    <p class="book-author">by Author Name</p>
+                    <p class="book-price">$19.99</p>
+                    <div class="book-actions">
+                        <button class="btn edit">Edit</button>
+                        <button class="btn delete">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        {% endblock %}
+        
+        <!-- Modal for editing books -->
+        <div id="edit-modal" class="modal">
+            <!-- Modals are hidden dialogs that appear on top of the page content -->
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <!-- &times; is the HTML entity for the × character -->
+                
+                <h2>Edit Book</h2>
+                
+                <form id="edit-book-form">
+                    <input type="hidden" id="edit-book-id">
+                    <!-- Hidden input field to store the book ID being edited -->
+                    
+                    <div class="form-group">
+                        <label for="edit-title">Title:</label>
+                        <input type="text" id="edit-title" name="title" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit-author">Author:</label>
+                        <input type="text" id="edit-author" name="author" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit-price">Price:</label>
+                        <input type="number" id="edit-price" name="price" step="0.01" min="0" required>
+                    </div>
+                    
+                    <button type="submit" class="btn primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </main>
+{% block scripts %}
+<!-- Additional scripts specific to this page can go here -->
+{% endblock %}

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<!-- DOCTYPE declaration defines the document type and version of HTML -->
+
+<html lang="en">
+<!-- The html element is the root element of an HTML page -->
+<!-- lang attribute specifies the language of the document -->
+
+<head>
+    <!-- The head element contains meta-information about the document -->
+    <meta charset="UTF-8">
+    <!-- charset defines the character encoding for the HTML document -->
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- viewport meta tag ensures proper responsive behavior on different devices -->
+    
+    <title>Book Library App</title>
+    <!-- The title element defines the title shown in the browser's title bar or tab -->
+    
+    <!-- Link to external CSS file for styling -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Internal CSS could also be defined here using a style tag -->
+    <!-- <style>
+         CSS rules can be written here
+    </style> -->
+</head>
+
+<body>
+    <!-- The body element contains the content that is visible to the user -->
+    
+    <header>
+        <!-- The header element represents introductory content, usually at the top of the page -->
+        <div class="container">
+            <!-- Container div helps control the width and positioning of content -->
+            <h1>Book Library Management</h1>
+            <!-- h1 defines the main heading of the page -->
+            
+            <div class="auth-section">
+                <!-- Section for authentication controls -->
+                <input type="text" id="token-input" placeholder="Enter token">
+                <button id="login-btn">Login</button>
+                <span id="auth-status">Not authenticated</span>
+            </div>
+        </div>
+    </header>
+    
+    <main class="container">
+        <!-- The main element contains the central content of the document -->
+        
+        <section class="book-form">
+            <!-- A section element defines a section in a document -->
+            <h2>Add New Book</h2>
+            <!-- h2 defines a second-level heading -->
+            
+            <form id="add-book-form">
+                <!-- The form element is used to collect user input -->
+                <div class="form-group">
+                    <!-- Class names help target elements with CSS -->
+                    <label for="title">Title:</label>
+                    <!-- The label element provides a text label for the input field -->
+                    <input type="text" id="title" name="title" required>
+                    <!-- The input element is used to accept data from the user -->
+                    <!-- required attribute makes the field mandatory -->
+                </div>
+                
+                <div class="form-group">
+                    <label for="author">Author:</label>
+                    <input type="text" id="author" name="author" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="price">Price:</label>
+                    <input type="number" id="price" name="price" step="0.01" min="0" required>
+                    <!-- step attribute defines the interval between legal numbers -->
+                    <!-- min attribute defines the minimum allowed value -->
+                </div>
+                
+                <button type="submit" class="btn primary">Add Book</button>
+                <!-- The button element defines a clickable button -->
+                <!-- type="submit" means this button will submit the form -->
+            </form>
+        </section>
+        
+        <section class="book-list">
+            <h2>Book Collection</h2>
+            
+            <div class="filters">
+                <!-- Area for future filter options -->
+                <input type="text" id="search" placeholder="Search books...">
+            </div>
+            
+            <div class="books-container">
+                <!-- This element will be filled with book cards by JavaScript -->
+                <p id="loading-message">Loading books...</p>
+                
+                <!-- Example of what a book card will look like -->
+                <!-- This is for demonstration and will be created dynamically by JS -->
+                <div class="book-card template">
+                    <!-- template class means this is just a model, not for display -->
+                    <h3 class="book-title">Book Title</h3>
+                    <p class="book-author">by Author Name</p>
+                    <p class="book-price">$19.99</p>
+                    <div class="book-actions">
+                        <button class="btn edit">Edit</button>
+                        <button class="btn delete">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Modal for editing books -->
+        <div id="edit-modal" class="modal">
+            <!-- Modals are hidden dialogs that appear on top of the page content -->
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <!-- &times; is the HTML entity for the × character -->
+                
+                <h2>Edit Book</h2>
+                
+                <form id="edit-book-form">
+                    <input type="hidden" id="edit-book-id">
+                    <!-- Hidden input field to store the book ID being edited -->
+                    
+                    <div class="form-group">
+                        <label for="edit-title">Title:</label>
+                        <input type="text" id="edit-title" name="title" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit-author">Author:</label>
+                        <input type="text" id="edit-author" name="author" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit-price">Price:</label>
+                        <input type="number" id="edit-price" name="price" step="0.01" min="0" required>
+                    </div>
+                    
+                    <button type="submit" class="btn primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <!-- The footer element defines a footer for a document or section -->
+        <div class="container">
+            <p>&copy; 2025 Book Library App - A Teaching Example</p>
+        </div>
+    </footer>
+    
+    <!-- Link to external JavaScript file for functionality -->
+    <script src="script.js"></script>
+    
+    <!-- JavaScript can also be included inline -->
+    <!-- <script>
+         JavaScript code can be written here
+    </script> -->
+</body>
+</html>

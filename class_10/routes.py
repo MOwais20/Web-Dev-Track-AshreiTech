@@ -6,7 +6,7 @@ from auth import verify_token
 router = APIRouter(prefix="/books", tags=["books"])
 
 # In-memory database of books (for demonstration purposes)
-books_db = [
+books_db: list[Book] = [
     Book(id=1, title="The Great Gatsby", author="F. Scott Fitzgerald", price=19.99),
     Book(id=2, title="1984", author="George Orwell", price=14.99)
 ]

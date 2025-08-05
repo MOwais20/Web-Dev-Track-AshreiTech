@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Book Details: {{ book.title }}{% endblock %}
+
+{% block content %}
+<section class="book-detail">
+    <h2>Book Details</h2>
+    
+    <div class="book-card detail">
+        <h3 class="book-title">{{ book.title }}</h3>
+        <p class="book-author">by {{ book.author }}</p>
+        <p class="book-price">${{ "%.2f"|format(book.price) }}</p>
+        
+        <div class="book-actions">
+            <a href="{{ url_for('list_books_page') }}" class="btn">Back to List</a>
+            <button class="btn edit" onclick="openEditModal({{ book|tojson|safe }})">Edit</button>
+            <button class="btn delete" onclick="handleDeleteBook({{ book.id }})">Delete</button>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Book detail specific JavaScript can go here
+    function handleDeleteBook(bookId) {
+        // Confirm deletion
+        if (!confirm('Are you sure you want to delete this book?')) {
+            return;
+        }
+        
+        // Get token from storage or input
+        const token = document.getElementById('token-input').value;
+        
+        // Check if token exists
+        if (!token) {
+            alert('Please enter your authentication token first');
+            return;
+        }
+        
+        // Delete the book
+        fetch(`/books/${bookId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to delete book');
+            }
+            return response.json();
+        })
+        .then(data => {
+            alert('Book deleted successfully');
+            // Redirect to book list
+            window.location.href = '{{ url_for("list_books_page") }}';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error deleting book: ' + error.message);
+        });
+    }
+
+    function openEditModal(book) {
+        // Open a modal or redirect to edit page
+        const modal = document.getElementById('edit-modal');
+        if (!modal) {
+            window.location.href = `/books/${book.id}/edit`;
+            return;
+        }
+        
+        // Fill form with book data
+        document.getElementById('edit-book-id').value = book.id;
+        document.getElementById('edit-title').value = book.title;
+        document.getElementById('edit-author').value = book.author;
+        document.getElementById('edit-price').value = book.price;
+        
+        // Show modal
+        modal.style.display = 'block';
+    }
+</script>
+{% endblock %}
