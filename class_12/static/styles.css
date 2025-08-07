@@ -178,6 +178,21 @@ input:focus {
     gap: 20px; /* Space between grid items */
 }
 
+/* 
+ * Error Page Styles
+ * Styles for the error pages
+ */
+.error-section {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.error-message {
+    font-size: 1.2rem;
+    color: #e74c3c;
+    margin: 20px 0;
+}
+
 .book-card {
     border: 1px solid #eee;
     border-radius: 4px;
