@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo App</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script src="./index.js" defer></script>
+  </head>
+  <body class="p-4">
+    <section>
+      <h1 class="text-center">Todo App</h1>
+
+      <div class="input-section">
+        <input 
+          type="text" 
+          id="todo-input" 
+          placeholder="Enter a new todo..." 
+          class="border p-2 rounded-l"
+        />
+        <button
+          id="addItemButton"
+          onclick="addTodo()"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r"
+        >
+          Add Todo
+        </button>
+      </div>
+
+      <div class="cards mt-4 space-y-4 px-4">
+        <h2 class="text-lg font-bold">Todo Items</h2>
+        <div id="todo-list"></div>
+      </div>
+    </section>
+  </body>
+</html>

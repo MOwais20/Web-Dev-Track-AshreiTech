@@ -1,0 +1,32 @@
+body {
+    margin: 20px;
+    padding: 10px;
+    background-color: lightblue;
+    border: 5px dashed black;
+}
+
+#first_heading_tag {
+    color: darkcyan;
+    background-color: white;
+    width: 550px;
+    height: fit-content;
+}
+
+
+   
+.blog_section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+
+    article {
+        
+        font-size: 25px;
+        color: darkgoldenrod;
+    }
+
+}
+
+

@@ -5,7 +5,8 @@ from auth import auth_router
 
 app = FastAPI()
 
-# Add custom middleware to log incoming requests
+# # Add custom middleware to log incoming requests
+app.middleware('http')(log_requests)
 app.middleware('http')(allow_only_POST_methods)
 
 # Include the main application routes
@@ -15,9 +16,9 @@ app.include_router(router)
 app.include_router(auth_router)
 
 # @app.get("/")
-# def show_msg():
-#     return {
-#         "messgae": "Heeloo, Welcome to our server"
-#     }
+def init_msg():
+    return {
+        "messgae": "Heeloo, Welcome to our server"
+    }
 
 # Run with: uvicorn main:app --reload
