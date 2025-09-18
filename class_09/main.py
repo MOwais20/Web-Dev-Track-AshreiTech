@@ -3,11 +3,24 @@
 # Students can use this as a starting point to learn about REST APIs and FastAPI features.
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
 from pydantic import BaseModel
 from typing import List
 
 # Create FastAPI app instance
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "*"
+    ],  # Allow requests from any origin
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all HTTP methods
+    allow_headers=["*"],  # Allow all headers
+)
+
 
 # Define the data model for a Todo item
 class Todo(BaseModel): # Object representing a To-Do item
@@ -34,6 +47,9 @@ todos: List[Todo] = [
 @app.post("/todo/add-item")
 def add_item_in_todo(item: Todo):
     todos.append(item)
+
+    print("\nCurrent Todos: ", todos)
+
     return {
         "message": "Item added successfully",
         "item": item,
@@ -99,7 +115,7 @@ def update_item_in_todo(item_id: int):
            
            
           
-    
+
 
 
 

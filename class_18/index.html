@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="styles.css">
     <script src="./index.js" defer></script>
   </head>
-  <body class="p-4">
+  <body class="p-4 mx-2">
     <section>
       <h1 class="text-center">Todo App</h1>
 
@@ -17,18 +17,18 @@
           type="text" 
           id="todo-input" 
           placeholder="Enter a new todo..." 
-          class="border p-2 rounded-l"
+          class="border p-2 mx-5 rounded-l"
         />
         <button
           id="addItemButton"
           onclick="addTodo()"
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r"
+          class="bg-blue-500 mr-3 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r"
         >
           Add Todo
         </button>
       </div>
 
-      <div class="cards mt-4 space-y-4 px-4">
+      <div class="cards mt-4 space-y-4 px-4 mx-5">
         <h2 class="text-lg font-bold">Todo Items</h2>
         <div id="todo-list"></div>
       </div>
