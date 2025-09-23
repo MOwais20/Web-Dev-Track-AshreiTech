@@ -8,6 +8,16 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
 
+import os
+from pymongo import MongoClient
+
+
+from dotenv import load_dotenv
+load_dotenv()  # Load environment variables from .env file
+
+client = MongoClient(os.getenv("DATABASE_URL"))
+DB = client[str(os.getenv("DB_NAME"))]
+
 # Create FastAPI app instance
 app = FastAPI()
 
@@ -31,17 +41,7 @@ class Todo(BaseModel): # Object representing a To-Do item
 # In-memory list to store todos
 # In a real app, you would use a database
 todos: List[Todo] = [
-    # {
-    # "id": 1,
-    # "task": "Task 1",
-    # "done": False
-    # },
-    #  {
-    # "id": 2,
-    # "task": "Task 2",
-    # "done": False
-    # }
-    
+
 ]
 
 @app.post("/todo/add-item")
@@ -49,6 +49,10 @@ def add_item_in_todo(item: Todo):
     todos.append(item)
 
     print("\nCurrent Todos: ", todos)
+
+    # Database insertion
+    DB.todos.insert_one(dict(item))
+
 
     return {
         "message": "Item added successfully",
@@ -58,10 +62,22 @@ def add_item_in_todo(item: Todo):
 
 @app.get("/todo/get-items")
 def get_items_from_todo():
+
+    todos_items = []
+    
+    todos_from_db = DB.todos.find({
+        # "done": False
+    })
+    # todos.clear()  # Clear the in-memory list to avoid duplicates
+    for todo in todos_from_db:
+        todo["_id"] = str(todo["_id"])  # Convert ObjectId to string
+        todos_items.append(todo)
+
+
     return {
         "message": "Items retrieved successfully",
-        "items": todos,
-        "total_items": len(todos),
+        "items": todos_items,
+        "total_items": len(todos_items),
         "success": True
     }
 
@@ -97,6 +113,10 @@ def update_item_in_todo(item_id: str):
     for index, todo in enumerate(todos):
         print("Index: ", index, "\n")
         print("Todo Item: ", todos[index], "\n")
+
+
+        # DB update
+    
 
         # try:
         if item_id == todo["id"]:
