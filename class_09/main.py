@@ -24,23 +24,23 @@ app.add_middleware(
 
 # Define the data model for a Todo item
 class Todo(BaseModel): # Object representing a To-Do item
-    id: int  # Unique identifier for the todo item
+    id: str  # Unique identifier for the todo item
     task: str  # Description of the task
     done: bool = False  # Status of the task (default: not done)
 
 # In-memory list to store todos
 # In a real app, you would use a database
 todos: List[Todo] = [
-    {
-    "id": 1,
-    "task": "Task 1",
-    "done": False
-    },
-     {
-    "id": 2,
-    "task": "Task 2",
-    "done": False
-    }
+    # {
+    # "id": 1,
+    # "task": "Task 1",
+    # "done": False
+    # },
+    #  {
+    # "id": 2,
+    # "task": "Task 2",
+    # "done": False
+    # }
     
 ]
 
@@ -66,13 +66,14 @@ def get_items_from_todo():
     }
 
 @app.delete("/todo/delete-item")
-def delete_item_from_todo(item_id: int):
+def delete_item_from_todo(item_id: str):
+
     if len(todos) > 0:
         for todo_item in todos:
-            
-            print(todo_item, item_id)
-            
-            if todo_item.id == item_id:
+
+            print("Item ID: ", todo_item.id)
+
+            if todo_item.id == str(item_id):
                 todos.remove(todo_item)
                 return {
                     "message": "Item deleted successfully",
@@ -91,7 +92,7 @@ def delete_item_from_todo(item_id: int):
         }
         
 @app.put("/todo/update-item")
-def update_item_in_todo(item_id: int):
+def update_item_in_todo(item_id: str):
     print("Id: ", item_id, type(item_id))
     for index, todo in enumerate(todos):
         print("Index: ", index, "\n")

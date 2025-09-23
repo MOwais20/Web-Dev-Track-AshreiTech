@@ -10,27 +10,8 @@ function addTodo() {
     return;
   }
 
-  // Core Functionality of adding a todo item
-  // todo_items.push(user_input);
-
-  // fetch('http://localhost:8000/add_todo', {
-  //     method: 'POST',
-  //     headers: {
-  //         'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({ item: user_input }),
-  // })
-  // .then(response => response.json())
-  // .then(data => {
-  //     todo_items = data.todos;
-  //     renderTodoList();
-  // })
-  // .catch((error) => {
-  //     console.error('Error:', error);
-  // });
-
   const payload = {
-    id: 1,
+    id: crypto.randomUUID(),
     task: user_input,
     done: false,
   };
@@ -69,20 +50,11 @@ function saveTodos() {
   localStorage.setItem("todos", JSON.stringify(todo_items));
 }
 
-async function renderTodoList() {
-
- let todoItems = await fetch('http://localhost:8000/todo/get-items')
- todoItems = await todoItems.json()
-
- console.log("🚀 ~ renderTodoList ~ todoItems:", todoItems)
-
-    
-
-
+async function updateTodoListOnFrontend() {
   const todoList = document.getElementById("todo-list");
   todoList.innerHTML = "";
 
-  todoItems.items.forEach((item, index) => {
+  todo_items.forEach((item, index) => {
     const card = document.createElement("div");
     card.className = "card p-4 rounded";
     card.innerHTML = `
@@ -97,10 +69,66 @@ async function renderTodoList() {
   });
 }
 
-function deleteTodo(index) {
+async function renderTodoList() {
+
+ let todoItems = await fetch('http://localhost:8000/todo/get-items')
+ todoItems = await todoItems.json()
+
+ console.log("🚀 ~ renderTodoList ~ todoItems:", todoItems)
+
+
+  todo_items = [...todoItems.items, ...todo_items];
+
+  const todoList = document.getElementById("todo-list");
+  todoList.innerHTML = "";
+
+  todo_items.forEach((item, index) => {
+    const card = document.createElement("div");
+    card.className = "card p-4 rounded";
+    card.innerHTML = `
+          <div class="flex items-center justify-between shadow p-3 px-5 rounded-xl bg-gray-300">
+            <p class="text-gray-700">${item.task}</p>
+            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded" onclick="deleteTodo(${index})">
+              Delete
+            </button>
+          </div>
+        `;
+    todoList.appendChild(card);
+  });
+}
+
+function deleteTodo(index) {  
+  const todo_item_in_list = todo_items[index];
   todo_items.splice(index, 1);
-  saveTodos();
-  renderTodoList();
+
+  // Update the list on the frontend 
+  // updateTodoListOnFrontend();
+
+  fetch(`http://localhost:8000/todo/delete-item?item_id=${todo_item_in_list.id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer YOUR_ACCESS_TOKEN'
+    },
+    // body: JSON.stringify({ item_id: parseInt(todo_item_in_list.id) })
+  })
+  .then(async (response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok " + response.statusText);
+    }
+    let dataFromServer = await response.json();
+    console.log("🚀 ~ deleteTodo ~ dataFromServer:", dataFromServer)
+
+    if (dataFromServer.success) {
+      renderTodoList();
+      alert("Item deleted successfully from the server!");
+    }
+  })
+  .catch((error) => {
+    console.error("Error From Server:", error);
+  });
+
+  
 }
 
 // Add event listeners
