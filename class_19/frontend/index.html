@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do App & User Auth</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <div id="todo-section">
+            <div style="margin-bottom: 16px;">
+                <input type="text" id="todo-user-id" placeholder="User ID" required>
+                <button id="fetch-todos-btn" type="button">Fetch Todos</button>
+            </div>
+            <form id="todo-form">
+                <input type="text" id="todo-task" placeholder="New Task" required>
+                <button type="submit">Add Task</button>
+            </form>
+            <ul id="todo-list"></ul>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
